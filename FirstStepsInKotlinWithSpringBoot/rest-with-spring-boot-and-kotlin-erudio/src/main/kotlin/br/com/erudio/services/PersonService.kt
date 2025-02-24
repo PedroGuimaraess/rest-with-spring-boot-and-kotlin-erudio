@@ -1,7 +1,6 @@
 package br.com.erudio.services
 
 import br.com.erudio.data.vo.v1.PersonVO
-import br.com.erudio.data.vo.v2.PersonVO as PersonVOV2
 import br.com.erudio.exceptions.ResourceNotFoundException
 import br.com.erudio.mapper.DozerMapper
 import br.com.erudio.mapper.custom.PersonMapper
@@ -10,6 +9,7 @@ import br.com.erudio.repository.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
+import br.com.erudio.data.vo.v2.PersonVO as PersonVOV2
 
 @Service
 class PersonService {
