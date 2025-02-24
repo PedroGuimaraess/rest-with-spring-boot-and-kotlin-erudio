@@ -1,8 +1,10 @@
 package br.com.erudio.services
 
 import br.com.erudio.data.vo.v1.PersonVO
+import br.com.erudio.data.vo.v2.PersonVO as PersonVOV2
 import br.com.erudio.exceptions.ResourceNotFoundException
 import br.com.erudio.mapper.DozerMapper
+import br.com.erudio.mapper.custom.PersonMapper
 import br.com.erudio.model.Person
 import br.com.erudio.repository.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +15,8 @@ import java.util.logging.Logger
 class PersonService {
     @Autowired(required=false)
     private lateinit var repository: PersonRepository
+    @Autowired(required=false)
+    private lateinit var mapper: PersonMapper
     private val logger = Logger.getLogger(PersonService::class.java.name)
 
     fun findAll(): List<PersonVO> {
@@ -32,6 +36,12 @@ class PersonService {
         logger.info("Create one person with first name ${person.firstName}! ")
         val entity:Person =  DozerMapper.parseObject(person, Person::class.java)
         return DozerMapper.parseObject(repository.save(entity), PersonVO::class.java)
+    }
+
+    fun createV2(person: PersonVOV2): PersonVOV2 {
+        logger.info("Create one person with first name ${person.firstName}! ")
+        val entity:Person = mapper.mapVOToEntity(person)
+        return mapper.mapEntityToVO(repository.save(entity))
     }
 
     fun update(id: Long, person: PersonVO): PersonVO {
