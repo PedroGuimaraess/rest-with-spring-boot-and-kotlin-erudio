@@ -9,7 +9,7 @@ import java.util.*
 class PersonMapper {
     fun mapEntityToVO(person: Person): PersonVO {
         val vo = PersonVO()
-        vo.id = person.id
+        vo.key = person.id
         vo.firstName = person.firstName
         vo.lastName = person.lastName
         vo.address = person.address
@@ -20,7 +20,7 @@ class PersonMapper {
 
     fun mapVOToEntity(person: PersonVO): Person {
         val entity = Person()
-        entity.id = person.id
+        entity.id = person.key
         entity.firstName = person.firstName
         entity.lastName = person.lastName
         entity.address = person.address
