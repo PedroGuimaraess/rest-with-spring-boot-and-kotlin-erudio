@@ -2,6 +2,7 @@ package br.com.erudio.services
 
 import br.com.erudio.controller.PersonController
 import br.com.erudio.data.vo.v1.PersonVO
+import br.com.erudio.exceptions.RequeriedObjectIsNullException
 import br.com.erudio.exceptions.ResourceNotFoundException
 import br.com.erudio.mapper.DozerMapper
 import br.com.erudio.mapper.custom.PersonMapper
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
-import br.com.erudio.data.vo.v2.PersonVO as PersonVOV2
+import br.com.erudio.data.vo.v2.PersonVOV2 as PersonVOV2
 
 @Service
 class PersonService {
@@ -42,7 +43,8 @@ class PersonService {
         return personVO
     }
 
-    fun create(person: PersonVO): PersonVO {
+    fun create(person: PersonVO?): PersonVO {
+        if (person == null) throw RequeriedObjectIsNullException()
         logger.info("Create one person with first name ${person.firstName}! ")
         val entity:Person =  DozerMapper.parseObject(person, Person::class.java)
         val personVO: PersonVO = DozerMapper.parseObject(repository.save(entity), PersonVO::class.java)
@@ -51,13 +53,18 @@ class PersonService {
         return personVO
     }
 
-    fun createV2(person: PersonVOV2): PersonVOV2 {
+    fun createV2(person: PersonVOV2?): PersonVOV2 {
+        if (person == null) throw RequeriedObjectIsNullException()
         logger.info("Create one person with first name ${person.firstName}! ")
-        val entity:Person = mapper.mapVOToEntity(person)
-        return mapper.mapEntityToVO(repository.save(entity))
+        val entity:Person =  DozerMapper.parseObject(person, Person::class.java)
+        val personVOV2: PersonVOV2 = DozerMapper.parseObject(repository.save(entity), PersonVOV2::class.java)
+        val withSelfRel = linkTo(PersonController::class.java).slash(personVOV2.key).withSelfRel()
+        personVOV2.add(withSelfRel)
+        return personVOV2
     }
 
-    fun update(id: Long, person: PersonVO): PersonVO {
+    fun update(id: Long, person: PersonVO?): PersonVO {
+        if (person == null) throw RequeriedObjectIsNullException()
         logger.info("Updating one person with id ${id}! ")
         val entity = repository.findById(id)
             .orElseThrow{ResourceNotFoundException("No records found for this id")}

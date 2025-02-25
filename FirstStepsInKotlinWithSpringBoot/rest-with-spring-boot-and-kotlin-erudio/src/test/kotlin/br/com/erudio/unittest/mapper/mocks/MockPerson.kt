@@ -2,7 +2,9 @@ package br.com.erudio.unittests.mapper.mocks
 
 import java.util.ArrayList
 import br.com.erudio.data.vo.v1.PersonVO
+import br.com.erudio.data.vo.v2.PersonVOV2
 import br.com.erudio.model.Person
+import java.util.Date
 
 class MockPerson {
     fun mockEntity(): Person {
@@ -41,6 +43,16 @@ class MockPerson {
 
     fun mockVO(number: Int): PersonVO {
         val person = PersonVO()
+        person.address = "Address Test$number"
+        person.firstName = "First Name Test$number"
+        person.gender = if (number % 2 == 0) "Male" else "Female"
+        person.key = number.toLong()
+        person.lastName = "Last Name Test$number"
+        return person
+    }
+
+    fun mockVOV2(number: Int): PersonVOV2 {
+        val person = PersonVOV2()
         person.address = "Address Test$number"
         person.firstName = "First Name Test$number"
         person.gender = if (number % 2 == 0) "Male" else "Female"

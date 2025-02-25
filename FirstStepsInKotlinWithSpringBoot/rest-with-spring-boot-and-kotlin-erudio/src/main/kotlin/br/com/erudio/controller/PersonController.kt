@@ -6,7 +6,7 @@ import br.com.erudio.util.MediaType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import br.com.erudio.data.vo.v2.PersonVO as PersonVOV2
+import br.com.erudio.data.vo.v2.PersonVOV2 as PersonVOV2
 
 @RestController
 @RequestMapping("/person")

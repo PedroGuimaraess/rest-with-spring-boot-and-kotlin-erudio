@@ -1,11 +1,11 @@
 package br.com.erudio.data.vo.v2
 
 import com.github.dozermapper.core.Mapping
-import jakarta.persistence.*
+import org.springframework.hateoas.RepresentationModel
 import java.util.Date
 
 
-data class PersonVO (
+data class PersonVOV2 (
     @Mapping("id")
     var key: Long = 0,
 
@@ -18,4 +18,4 @@ data class PersonVO (
     var gender: String = "",
 
     var birthDay: Date? = null
-)
+): RepresentationModel<PersonVOV2>()
