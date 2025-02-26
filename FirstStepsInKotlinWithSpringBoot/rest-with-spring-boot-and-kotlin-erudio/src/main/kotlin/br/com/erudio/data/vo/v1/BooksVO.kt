@@ -6,20 +6,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import com.github.dozermapper.core.Mapping
 import jakarta.persistence.*
 import org.springframework.hateoas.RepresentationModel
+import java.util.*
 
-@JsonPropertyOrder("id", "address", "firstName", "lastName", "gender")
-data class PersonVO (
+@JsonPropertyOrder("id", "author", "price", "lastName", "title")
+data class BooksVO (
     @Mapping("id")
     @field: JsonProperty("id")
     var key: Long = 0,
 
-    @field:JsonProperty("first_name")
-    var firstName: String = "",
+    @field:JsonProperty("author")
+    var author: String = "",
 
-    @field:JsonProperty("last_name")
-    var lastName: String = "",
+    @field:JsonProperty("launch_date")
+    var launch_date: Date? = null,
 
-    var address: String = "",
+    var price: String = "",
 
-     var gender: String = ""
-): RepresentationModel<PersonVO>()
+     var title: String = ""
+): RepresentationModel<BooksVO>()
