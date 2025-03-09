@@ -18,7 +18,7 @@ data class Books (
     var launch_date: Date? = null,
 
     @Column(name = "price", nullable = false)
-    var price: BigDecimal,
+    var price: Double = 0.0,
 
     @Column(name = "title", nullable = false, length = 100)
     var title: String = ""

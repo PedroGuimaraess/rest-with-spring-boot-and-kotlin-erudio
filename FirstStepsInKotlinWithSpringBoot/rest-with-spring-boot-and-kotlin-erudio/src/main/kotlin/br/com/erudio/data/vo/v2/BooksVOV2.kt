@@ -1,4 +1,4 @@
-package br.com.erudio.data.vo.v1
+package br.com.erudio.data.vo.v2
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -9,7 +9,7 @@ import org.springframework.hateoas.RepresentationModel
 import java.util.*
 
 @JsonPropertyOrder("id", "author", "launch_date", "price", "title")
-data class BooksVO (
+data class BooksVOV2 (
     @Mapping("id")
     @field: JsonProperty("id")
     var key: Long = 0,
@@ -23,4 +23,4 @@ data class BooksVO (
     var price: Double = 0.0,
 
      var title: String = ""
-): RepresentationModel<BooksVO>()
+): RepresentationModel<BooksVOV2>()

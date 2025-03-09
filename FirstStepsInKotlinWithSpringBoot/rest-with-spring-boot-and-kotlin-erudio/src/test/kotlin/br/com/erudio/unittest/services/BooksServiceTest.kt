@@ -1,9 +1,9 @@
-package br.com.erudio.mockito.services
+package br.com.erudio.unittest.services
 
 import br.com.erudio.exceptions.RequeriedObjectIsNullException
-import br.com.erudio.repository.PersonRepository
-import br.com.erudio.services.PersonService
-import br.com.erudio.unittests.mapper.mocks.MockPerson
+import br.com.erudio.repository.BooksRepository
+import br.com.erudio.services.BooksService
+import br.com.erudio.unittests.mapper.mocks.MockBooks
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -16,60 +16,58 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-class PersonServiceTest {
+class BooksServiceTest {
 
-    private lateinit var inputObject: MockPerson
+    private lateinit var inputObject: MockBooks
 
     @InjectMocks
-    private lateinit var service: PersonService
+    private lateinit var service: BooksService
 
     @Mock
-    private lateinit var repository: PersonRepository
+    private lateinit var repository: BooksRepository
 
     @BeforeEach
     fun setUpMock() {
-        inputObject = MockPerson()
+        inputObject = MockBooks()
         MockitoAnnotations.openMocks(this)
     }
 
     @Test
     fun findAll() {
-        val people = inputObject.mockEntityList()
-        `when`(repository.findAll()).thenReturn(people)
+        val books = inputObject.mockEntityList()
+        `when`(repository.findAll()).thenReturn(books)
 
         val response = service.findAll()
 
         assertNotNull(response)
         assertEquals(14, response.size)
 
-        val personOne = response[1]
+        val BooksOne = response[1]
 
-        assertNotNull(personOne)
-        assertNotNull(personOne.key)
-        assertNotNull(personOne.links)
-        assertTrue(personOne.links.toString().contains("/person/1"))
-        assertEquals("Address Test1", personOne.address)
-        assertEquals("First Name Test1", personOne.firstName)
-        assertEquals("Last Name Test1", personOne.lastName)
-        assertEquals("Female", personOne.gender)
+        assertNotNull(BooksOne)
+        assertNotNull(BooksOne.key)
+        assertNotNull(BooksOne.links)
+        assertTrue(BooksOne.links.toString().contains("/api/Books/v1/1"))
+        assertEquals("Some title1", BooksOne.title)
+        assertEquals("Some Author1", BooksOne.author)
+        assertEquals(25.0, BooksOne.price)
 
-        val personFour = response[4]
+        val BooksFour = response[4]
 
-        assertNotNull(personFour)
-        assertNotNull(personFour.key)
-        assertNotNull(personFour.links)
-        assertTrue(personFour.links.toString().contains("/person/4"))
-        assertEquals("Address Test4", personFour.address)
-        assertEquals("First Name Test4", personFour.firstName)
-        assertEquals("Last Name Test4", personFour.lastName)
-        assertEquals("Male", personFour.gender)
+        assertNotNull(BooksFour)
+        assertNotNull(BooksFour.key)
+        assertNotNull(BooksFour.links)
+        assertTrue(BooksFour.links.toString().contains("/api/Books/v1/4"))
+        assertEquals("Some title4", BooksFour.title)
+        assertEquals("Some Author4", BooksFour.author)
+        assertEquals(25.0, BooksFour.price)
     }
 
     @Test
     fun findById() {
-        val person = inputObject.mockEntity(1)
-        person.id = 1L
-        `when`(repository.findById(1)).thenReturn(Optional.of(person))
+        val Books = inputObject.mockEntity(1)
+        Books.id = 1L
+        `when`(repository.findById(1)).thenReturn(Optional.of(Books))
 
         val response = service.findById(1)
 
@@ -77,12 +75,11 @@ class PersonServiceTest {
         assertNotNull(response.key)
         assertNotNull(response.links)
 
-        assertTrue(response.links.toString().contains("/person/1"))
+        assertTrue(response.links.toString().contains("/api/Books/v1/1"))
 
-        assertEquals("Address Test1", response.address)
-        assertEquals("First Name Test1", response.firstName)
-        assertEquals("Last Name Test1", response.lastName)
-        assertEquals("Female", response.gender)
+        assertEquals("Some title1", response.title)
+        assertEquals("Some Author1", response.author)
+        assertEquals(25.0, response.price)
     }
 
     @Test
@@ -100,16 +97,15 @@ class PersonServiceTest {
         assertNotNull(response)
         assertNotNull(response.key)
         assertNotNull(response.links)
-        assertTrue(response.links.toString().contains("/person/1"))
-        assertEquals("Address Test1", response.address)
-        assertEquals("First Name Test1", response.firstName)
-        assertEquals("Last Name Test1", response.lastName)
-        assertEquals("Female", response.gender)
+        assertTrue(response.links.toString().contains("/api/Books/v1/1"))
+        assertEquals("Some title1", response.title)
+        assertEquals("Some Author1", response.author)
+        assertEquals(25.0, response.price)
     }
 
 
     @Test
-    fun createWithNullPerson(){
+    fun createWithNullBooks(){
         val exception: Exception = assertThrows(
             RequeriedObjectIsNullException::class.java
         ){service.create(null)}
@@ -134,11 +130,10 @@ class PersonServiceTest {
         assertNotNull(response)
         assertNotNull(response.key)
         assertNotNull(response.links)
-        assertTrue(response.links.toString().contains("/person/1"))
-        assertEquals("Address Test1", response.address)
-        assertEquals("First Name Test1", response.firstName)
-        assertEquals("Last Name Test1", response.lastName)
-        assertEquals("Female", response.gender)
+        assertTrue(response.links.toString().contains("/api/Books/v1/1"))
+        assertEquals("Some title1", response.title)
+        assertEquals("Some Author1", response.author)
+        assertEquals(25.0, response.price)
     }
 
     @Test
@@ -157,15 +152,14 @@ class PersonServiceTest {
         assertNotNull(response)
         assertNotNull(response.key)
         assertNotNull(response.links)
-        assertTrue(response.links.toString().contains("/person/1"))
-        assertEquals("Address Test1", response.address)
-        assertEquals("First Name Test1", response.firstName)
-        assertEquals("Last Name Test1", response.lastName)
-        assertEquals("Female", response.gender)
+        assertTrue(response.links.toString().contains("/api/Books/v1/1"))
+        assertEquals("Some title1", response.title)
+        assertEquals("Some Author1", response.author)
+        assertEquals(25.0, response.price)
     }
 
     @Test
-    fun updateWithNullPerson(){
+    fun updateWithNullBooks(){
         val exception: Exception = assertThrows(
             RequeriedObjectIsNullException::class.java
         ){service.update(1,null)}
