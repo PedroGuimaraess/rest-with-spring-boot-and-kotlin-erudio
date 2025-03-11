@@ -1,5 +1,6 @@
 package integrationtests.swagger
 
+import br.com.erudio.Startup
 import integrationtests.ConfigsTest
 import io.restassured.RestAssured.given
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -7,8 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 
-@SpringBootTest(classes = [AbstractIntegrationTest::class], webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@ContextConfiguration(classes = [AbstractIntegrationTest::class])
+@SpringBootTest(classes = [Startup::class], webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class SwaggerIntegrationTest(): AbstractIntegrationTest() {
 
 	@Test
