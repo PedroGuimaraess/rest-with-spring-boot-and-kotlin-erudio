@@ -93,14 +93,10 @@ class BooksController {
     @Operation(summary = "Adds a new Books", description = "Adds a new Books",
         tags = ["Books"],
         responses = [
-            ApiResponse(
-                description = "Success",
-                responseCode = "200",
-                content = [
+            ApiResponse(description = "Success", responseCode = "200", content = [
                     Content(schema = Schema(implementation = BooksVO::class))
-                ]
-            ),
-            ApiResponse(description = "No Content", responseCode = "204", content = [
+            ] ),
+            ApiResponse(description = "No Content", responseCode = "204",  content = [
                 Content(schema = Schema(implementation = Unit::class))
             ] ),
             ApiResponse(description = "Bad Request", responseCode = "400", content = [

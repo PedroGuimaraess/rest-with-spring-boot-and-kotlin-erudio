@@ -1,12 +1,12 @@
 package integrationtests.swagger
 
 import br.com.erudio.Startup
-import integrationtests.ConfigsTest
+import integrationtests.TestConfigs
+import integrationtests.testcontainers.AbstractIntegrationTest
 import io.restassured.RestAssured.given
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ContextConfiguration
 
 @SpringBootTest(classes = [Startup::class], webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class SwaggerIntegrationTest(): AbstractIntegrationTest() {
@@ -15,7 +15,7 @@ class SwaggerIntegrationTest(): AbstractIntegrationTest() {
 	fun shouldReturnSwaggerUiPage() {
 		val content = given()
 			.basePath("/swagger-ui/index.html")
-			.port(ConfigsTest.SERVER_PORT)
+			.port(TestConfigs.SERVER_PORT)
 			.`when`()
 			.get()
 			.then()

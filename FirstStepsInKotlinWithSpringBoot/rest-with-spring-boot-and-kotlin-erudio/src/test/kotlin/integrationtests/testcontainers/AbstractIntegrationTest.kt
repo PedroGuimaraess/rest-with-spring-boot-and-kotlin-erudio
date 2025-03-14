@@ -1,4 +1,4 @@
-package integrationtests.swagger
+package integrationtests.testcontainers
 
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
