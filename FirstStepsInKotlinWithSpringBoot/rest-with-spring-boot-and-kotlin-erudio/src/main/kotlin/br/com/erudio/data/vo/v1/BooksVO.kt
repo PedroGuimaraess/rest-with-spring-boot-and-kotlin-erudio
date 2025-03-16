@@ -18,7 +18,7 @@ data class BooksVO (
     var author: String = "",
 
     @field:JsonProperty("launch_date")
-    var launch_date: Date? = null,
+    var launchDate: Date? = null,
 
     var price: Double = 0.0,
 

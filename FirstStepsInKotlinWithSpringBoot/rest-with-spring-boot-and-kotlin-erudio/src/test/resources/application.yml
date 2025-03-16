@@ -2,6 +2,11 @@ cors:
   originPatterns: http://localhost:8080,http://localhost:3000,http://erudio.com.br
 server:
   port: 8888
+security:
+  jwt:
+    token:
+      secret-key: 52pol12
+      expire-length: 3600000
 spring:
   devtools:
     restart:

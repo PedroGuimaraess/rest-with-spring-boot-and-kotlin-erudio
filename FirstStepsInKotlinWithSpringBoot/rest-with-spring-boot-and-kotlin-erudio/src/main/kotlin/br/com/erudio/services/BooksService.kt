@@ -72,7 +72,7 @@ class BooksService {
         entity.title = books.title
         entity.author = books.author
         entity.price = books.price
-        entity.launch_date = books.launch_date
+        entity.launchDate = books.launchDate
 
         val BooksVO: BooksVO = DozerMapper.parseObject(repository.save(entity), BooksVO::class.java)
         val withSelfRel = linkTo(BooksController::class.java).slash(BooksVO.key).withSelfRel()

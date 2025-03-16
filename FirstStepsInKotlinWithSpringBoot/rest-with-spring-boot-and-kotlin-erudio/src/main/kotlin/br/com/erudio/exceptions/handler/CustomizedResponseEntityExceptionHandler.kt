@@ -1,6 +1,7 @@
 package br.com.erudio.exceptions.handler
 
 import br.com.erudio.exceptions.ExceptionResponse
+import br.com.erudio.exceptions.InvalidJwtAuthenticationException
 import br.com.erudio.exceptions.RequeriedObjectIsNullException
 import br.com.erudio.exceptions.ResourceNotFoundException
 import org.springframework.http.HttpStatus
@@ -44,5 +45,15 @@ class CustomizedResponseEntityExceptionHandler: ResponseEntityExceptionHandler()
             request.getDescription(false)
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException::class)
+    fun handleInvalidJwtAuthenticationException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
+        val exceptionResponse = ExceptionResponse(
+            Date(),
+            ex.message,
+            request.getDescription(false)
+        )
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.FORBIDDEN)
     }
 }
