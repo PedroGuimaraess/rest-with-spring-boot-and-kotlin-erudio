@@ -21,16 +21,15 @@ import java.util.*
 @Service
 class JwtTokenProvider {
 
-    @Value("\${securuty.jwt.token.secret-key:mySecretKey}")
-    private var secretKey = "mySecretKey"
+    @Value("\${security.jwt.token.secret-key:secret}")
+    private var secretKey = "secret"
 
-    @Value("\${securuty.jwt.token.expire-length:mySecretKey}")
-    private var validInMilliSeconds: Long = 3_600_000 // 1 hour
+    @Value("\${security.jwt.token.expire-length:3600000}")
+    private var validityInMilliseconds: Long = 3_600_000 //1h
 
     @Autowired
     private lateinit var userDetails: UserDetailsService
 
-    @Autowired
     private lateinit var algorithm: Algorithm
 
     @PostConstruct
@@ -39,9 +38,9 @@ class JwtTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.toByteArray())
     }
 
-    fun createAccesToken(username: String, roles: List<String>): TokenVO {
+    fun createAccessToken(username: String, roles: List<String?>): TokenVO {
         val nowDate = Date()
-        val valid = Date(nowDate.time + validInMilliSeconds)
+        val valid = Date(nowDate.time + validityInMilliseconds)
         val accessToken = getAccessToken(username, roles, nowDate, valid)
         val refreshToken = getRefreshToke(username, roles, nowDate)
 
@@ -55,7 +54,7 @@ class JwtTokenProvider {
         )
     }
 
-    private fun getAccessToken(username: String, roles: List<String>, nowDate: Date, valid: Date): String {
+    private fun getAccessToken(username: String, roles: List<String?>, nowDate: Date, valid: Date): String {
         val issuerURL: String  = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()
         return JWT.create()
             .withClaim("roles", roles)
@@ -68,8 +67,8 @@ class JwtTokenProvider {
 
     }
 
-    private fun getRefreshToke(username: String, roles: List<String>, nowDate: Date): String? {
-        val validRefreshToken = Date(nowDate.time + validInMilliSeconds * 3)
+    private fun getRefreshToke(username: String, roles: List<String?>, nowDate: Date): String? {
+        val validRefreshToken = Date(nowDate.time + validityInMilliseconds * 3)
 
         return JWT.create()
             .withClaim("roles", roles)

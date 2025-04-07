@@ -18,7 +18,7 @@ class User: UserDetails {
     var fullName: String? = null
 
     @Column(name = "password")
-    var password: String? = null
+    var userPassword: String? = null
 
     @Column(name = "account_non_expired")
     var accountNonExpired: Boolean? = null
@@ -32,7 +32,7 @@ class User: UserDetails {
     @Column(name = "enabled")
     var enabled: Boolean? = null
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Permission::class)
     @JoinTable(
         name = "user_permission",
         joinColumns = [JoinColumn(name = "id_user")],
@@ -40,7 +40,7 @@ class User: UserDetails {
     )
     var permissions: List<Permission>? = null
 
-    val role: List<String?>
+    val roles: List<String?>
         get() {
             val roles: MutableList<String?> = ArrayList()
             for (permission in permissions!!) {
@@ -53,8 +53,8 @@ class User: UserDetails {
         return permissions!!
     }
 
-    override fun getPassword(): String {
-        return password!!
+    override fun getPassword(): String? {
+        return userPassword!!
     }
 
     override fun getUsername(): String {
