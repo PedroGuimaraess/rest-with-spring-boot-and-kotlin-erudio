@@ -18,31 +18,43 @@ import java.util.logging.Logger
 class AuthService {
 
     @Autowired
-    private lateinit var repository: UserRepository
+    private lateinit var authenticationManager: AuthenticationManager
 
     @Autowired
     private lateinit var tokenProvider: JwtTokenProvider
 
     @Autowired
-    private lateinit var authenticationManager: AuthenticationManager
+    private lateinit var repository: UserRepository
 
     private val logger = Logger.getLogger(AuthService::class.java.name)
 
-    fun signin(data: AccountCredentialsVO): ResponseEntity<*> {
+    fun signin(data: AccountCredentialsVO) : ResponseEntity<*> {
         logger.info("Trying log user ${data.username}")
         return try {
             val username = data.username
             val password = data.password
             authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
             val user = repository.findByUserName(username)
-            val tokenResponse: TokenVO = if(user != null) {
+            val tokenResponse: TokenVO = if (user != null) {
                 tokenProvider.createAccessToken(username!!, user.roles)
             } else {
                 throw UsernameNotFoundException("Username $username not found!")
             }
             ResponseEntity.ok(tokenResponse)
-        } catch(e : AuthenticationException) {
-            throw BadCredentialsException("Invalid username or password supplied")
+        } catch (e: AuthenticationException) {
+            throw BadCredentialsException("Invalid username or password supplied!")
         }
     }
+
+//    fun refreshToken(username: String, refreshToken: String) : ResponseEntity<*> {
+//        logger.info("Trying get refresh token to user $username")
+//
+//        val user = repository.findByUserName(username)
+//        val tokenResponse: TokenVO = if (user != null) {
+//            tokenProvider.refreshToken(refreshToken)
+//        } else {
+//            throw UsernameNotFoundException("Username $username not found!")
+//        }
+//        return ResponseEntity.ok(tokenResponse)
+//    }
 }

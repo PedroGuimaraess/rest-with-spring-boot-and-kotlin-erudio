@@ -18,8 +18,6 @@ import br.com.erudio.data.vo.v2.BooksVOV2 as BooksVOV2
 class BooksService {
     @Autowired(required=false)
     private lateinit var repository: BooksRepository
-//    @Autowired(required=false)
-//    private lateinit var mapper: BooksMapper
     private val logger = Logger.getLogger(BooksService::class.java.name)
 
     fun findAll(): List<BooksVO> {

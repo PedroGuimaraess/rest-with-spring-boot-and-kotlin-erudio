@@ -21,10 +21,10 @@ class AuthController {
 
     @Operation(summary = "Authenticates an user and return a token")
     @PostMapping(value = ["/signin"])
-    fun signin(@RequestBody data: AccountCredentialsVO?): ResponseEntity<*> {
+    fun signin(@RequestBody data: AccountCredentialsVO?) : ResponseEntity<*> {
         return if (data!!.username.isNullOrBlank() || data.password.isNullOrBlank())
             ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("Invalid client request")
-            else authService.signin(data!!)
+        else authService.signin(data!!)
     }
 }

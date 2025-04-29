@@ -1,4 +1,4 @@
-package br.com.erudio.config
+package br.com.erudio.config//package br.com.erudio.config
 
 import br.com.erudio.security.jwt.JwtTokenFilter
 import br.com.erudio.security.jwt.JwtTokenProvider

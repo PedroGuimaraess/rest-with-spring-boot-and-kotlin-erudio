@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 @Entity
 @Table(name = "users")
-class User: UserDetails {
+class User : UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
@@ -18,7 +18,7 @@ class User: UserDetails {
     var fullName: String? = null
 
     @Column(name = "password")
-    var userPassword: String? = null
+    private var password: String? = null
 
     @Column(name = "account_non_expired")
     var accountNonExpired: Boolean? = null
@@ -41,7 +41,7 @@ class User: UserDetails {
     var permissions: List<Permission>? = null
 
     val roles: List<String?>
-        get() {
+        get(){
             val roles: MutableList<String?> = ArrayList()
             for (permission in permissions!!) {
                 roles.add(permission.description)
@@ -54,7 +54,7 @@ class User: UserDetails {
     }
 
     override fun getPassword(): String? {
-        return userPassword!!
+        return password!!
     }
 
     override fun getUsername(): String {

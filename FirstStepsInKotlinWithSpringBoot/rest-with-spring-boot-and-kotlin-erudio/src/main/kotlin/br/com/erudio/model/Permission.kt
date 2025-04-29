@@ -10,9 +10,8 @@ class Permission: GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
-    @Column(name = "description", length = 100)
+    @Column(name = "description", length = 255)
     var description: String? = null
 
     override fun getAuthority() = description!!
-
 }
